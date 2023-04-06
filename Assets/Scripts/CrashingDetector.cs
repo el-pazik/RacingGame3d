@@ -6,17 +6,21 @@ using UnityEngine.UIElements;
 public class CrashingDetector : MonoBehaviour
 {
     [SerializeField] private ScoreCounter scoreCounter;
-
-    private Vector3 _startPosition;
-
-    private void Start()
-    {
-        _startPosition = transform.position;
-    }
+    [SerializeField] private HealthCounter healthCounter;
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("trigger");
-        scoreCounter.ScoreText.text = $"{0}";
+        if(other.gameObject.tag == "Coin")
+        {
+            scoreCounter.Score += 10;
+        }
+        else if(other.gameObject.tag == "HealthPoint")
+        {
+            healthCounter.Health += 1;
+        }
+        else
+        {
+            healthCounter.Health--;
+        }
     }
 }
